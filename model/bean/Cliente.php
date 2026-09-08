@@ -1,6 +1,6 @@
 <?php
     class Cliente {
-        //Atributos
+        // Atributos
         private $id;
         private $nome;
         private $email;
@@ -8,7 +8,7 @@
         private $telefone;
         private $senha;
 
-        //Métodos de encapsulamento (getters e setters)
+        // Métodos de encapsulamento (getters e setters)
         public function getId() {
             return $this->id;
         }
@@ -24,7 +24,7 @@
         public function setNome($nome) {
             $this->nome = $nome;
         }
-
+        
         public function getEmail() {
             return $this->email;
         }

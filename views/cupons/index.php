@@ -1,3 +1,11 @@
+<?php
+    // Incluir o arquivo para carregamento das classes
+    require "../../autoload.php";
+
+    // Instanciar um objeto da classe DAO
+    $dao = new CuponsDAO();
+?>
+
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
   <head>
@@ -359,20 +367,27 @@
           <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
           >
-            <h1 class="h2">CRUD: SoundStore</h1>
+            <h1 class="h2">Gerenciamento de Cupons</h1>
             
           </div>
           
           <div class="table-responsive small">
-            <p>
-              Sistema Orientado a Objetos que faz um CRUD de 
-              uma SoundStore como demonstração para a turma de INF 4 
-              do ano de 2026. 
-            </p>
-            <p>
-              O Sistema está sendo desenvolvido seguindo o padrão 
-              DAO (Data Access Object.)
-            </p>
+            <table class="table table-hover">
+                <tr>
+                    <th>ID</th>
+                    <th>Código</th>
+                    <th>Desconto</th>
+                    <th>Validade</th>
+                </tr>
+                <?php foreach($dao->read() as $cupons) : ?>
+                    <tr>
+                        <td><?= $cupons->getId() ?></td>
+                        <td><?= $cupons->getCodigo() ?></td>
+                        <td><?= $cupons->getDesconto() ?></td>
+                        <td><?= $cupons->getValidade() ?></td>
+                    </tr>
+                <?php endforeach ?>
+            </table>
           </div>
         </main>
       </div>

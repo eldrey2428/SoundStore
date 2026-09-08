@@ -21,12 +21,12 @@ USE `soundstore_db` ;
 -- Table `soundstore_db`.`clientes`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `soundstore_db`.`clientes` (
-  `id` INT NULL DEFAULT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(100) NOT NULL,
-  `email` VARCHAR(100) NOT NULL,
-  `cpf` VARCHAR(14) NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(100) NULL,
+  `email` VARCHAR(100) NULL,
+  `cpf` VARCHAR(14) NULL,
   `telefone` VARCHAR(20) NULL DEFAULT NULL,
-  `senha` VARCHAR(100) NOT NULL,
+  `senha` VARCHAR(100) NULL,
   PRIMARY KEY (`id`));
 
 
@@ -34,10 +34,10 @@ CREATE TABLE IF NOT EXISTS `soundstore_db`.`clientes` (
 -- Table `soundstore_db`.`cupons`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `soundstore_db`.`cupons` (
-  `id` INT NULL DEFAULT NULL AUTO_INCREMENT,
-  `codigo` VARCHAR(20) NOT NULL,
-  `desconto` DECIMAL(5,2) NOT NULL,
-  `validade` DATE NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `codigo` VARCHAR(20) NULL,
+  `desconto` DECIMAL(5,2) NULL,
+  `validade` DATE NULL,
   PRIMARY KEY (`id`));
 
 
@@ -45,8 +45,8 @@ CREATE TABLE IF NOT EXISTS `soundstore_db`.`cupons` (
 -- Table `soundstore_db`.`categorias`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `soundstore_db`.`categorias` (
-  `id` INT NULL DEFAULT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(50) NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(50) NULL,
   PRIMARY KEY (`id`));
 
 
@@ -54,11 +54,11 @@ CREATE TABLE IF NOT EXISTS `soundstore_db`.`categorias` (
 -- Table `soundstore_db`.`produtos`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `soundstore_db`.`produtos` (
-  `id` INT NULL DEFAULT NULL AUTO_INCREMENT,
-  `categoria_id` INT NOT NULL,
-  `nome` VARCHAR(100) NOT NULL,
-  `preco` DECIMAL(10,2) NOT NULL,
-  `estoque` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `categoria_id` INT NULL,
+  `nome` VARCHAR(100) NULL,
+  `preco` DECIMAL(10,2) NULL,
+  `estoque` INT NULL,
   PRIMARY KEY (`id`),
   INDEX (`categoria_id` ASC) VISIBLE,
   CONSTRAINT ``
@@ -70,41 +70,48 @@ CREATE TABLE IF NOT EXISTS `soundstore_db`.`produtos` (
 -- Table `soundstore_db`.`pedidos`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `soundstore_db`.`pedidos` (
-  `id` INT NULL DEFAULT NULL AUTO_INCREMENT,
-  `cliente_id` INT NOT NULL,
-  `cupom_id` INT NULL DEFAULT NULL,
-  `data_pedido` DATETIME NOT NULL,
-  `status` VARCHAR(20) NOT NULL,
-  `valor_total` DECIMAL(10,2) NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `data_pedido` DATETIME NULL,
+  `status` VARCHAR(20) NULL,
+  `valor_total` DECIMAL(10,2) NULL,
+  `cupons_id` INT NOT NULL,
+  `clientes_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX (`cliente_id` ASC) VISIBLE,
-  INDEX (`cupom_id` ASC) VISIBLE,
-  CONSTRAINT ``
-    FOREIGN KEY (`cliente_id`)
-    REFERENCES `soundstore_db`.`clientes` (`id`),
-  CONSTRAINT ``
-    FOREIGN KEY (`cupom_id`)
-    REFERENCES `soundstore_db`.`cupons` (`id`));
+  INDEX `fk_pedidos_cupons1_idx` (`cupons_id` ASC) VISIBLE,
+  INDEX `fk_pedidos_clientes1_idx` (`clientes_id` ASC) VISIBLE,
+  CONSTRAINT `fk_pedidos_cupons1`
+    FOREIGN KEY (`cupons_id`)
+    REFERENCES `soundstore_db`.`cupons` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_pedidos_clientes1`
+    FOREIGN KEY (`clientes_id`)
+    REFERENCES `soundstore_db`.`clientes` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
 
 
 -- -----------------------------------------------------
--- Table `soundstore_db`.`item_pedido`
+-- Table `soundstore_db`.`pedidos_has_produtos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `soundstore_db`.`item_pedido` (
-  `id` INT NULL DEFAULT NULL AUTO_INCREMENT,
-  `pedido_id` INT NOT NULL,
-  `produto_id` INT NOT NULL,
-  `quantidade` INT NOT NULL,
-  `preco_unitario` DECIMAL(10,2) NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX (`pedido_id` ASC) VISIBLE,
-  INDEX (`produto_id` ASC) VISIBLE,
-  CONSTRAINT ``
-    FOREIGN KEY (`pedido_id`)
-    REFERENCES `soundstore_db`.`pedidos` (`id`),
-  CONSTRAINT ``
-    FOREIGN KEY (`produto_id`)
-    REFERENCES `soundstore_db`.`produtos` (`id`));
+CREATE TABLE IF NOT EXISTS `soundstore_db`.`pedidos_has_produtos` (
+  `pedidos_id` INT NOT NULL,
+  `produtos_id` INT NOT NULL,
+  `quantidade` INT NULL,
+  `precoUnitario` FLOAT NULL,
+  PRIMARY KEY (`pedidos_id`, `produtos_id`),
+  INDEX `fk_pedidos_has_produtos_produtos1_idx` (`produtos_id` ASC) VISIBLE,
+  INDEX `fk_pedidos_has_produtos_pedidos1_idx` (`pedidos_id` ASC) VISIBLE,
+  CONSTRAINT `fk_pedidos_has_produtos_pedidos1`
+    FOREIGN KEY (`pedidos_id`)
+    REFERENCES `soundstore_db`.`pedidos` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_pedidos_has_produtos_produtos1`
+    FOREIGN KEY (`produtos_id`)
+    REFERENCES `soundstore_db`.`produtos` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
