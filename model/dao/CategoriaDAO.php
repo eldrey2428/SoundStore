@@ -2,7 +2,7 @@
     class CategoriaDAO {
         public function read() {
             try {
-                $query = BD::getConexao()->prepare("SELECT * FROM categoria");
+                $query = BD::getConexao()->prepare("SELECT * FROM categorias");
                 
                 if(!$query->execute()) {
                     print_r($query->errorInfo());

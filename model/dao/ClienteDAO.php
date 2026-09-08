@@ -2,7 +2,7 @@
     class ClienteDAO {
         public function read() {
             try {
-                $query = BD::getConexao()->prepare("SELECT * FROM cliente");
+                $query = BD::getConexao()->prepare("SELECT * FROM clientes");
                 
                 if(!$query->execute()) {
                     print_r($query->errorInfo());
@@ -16,7 +16,7 @@
                     $cliente->setEmail($linha['email']);
                     $cliente->setCpf($linha['cpf']);
                     $cliente->setTelefone($linha['telefone']);
-                    $cliente->setEmail($linha['senha']);
+                    $cliente->setSenha($linha['senha']);
 
                     array_push($listaClientes, $cliente);
                 }

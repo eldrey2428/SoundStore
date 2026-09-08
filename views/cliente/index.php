@@ -376,9 +376,10 @@
                 <tr>
                     <th>ID</th>
                     <th>Nome</th>
+                    <th>E-mail</th>
                     <th>CPF</th>
                     <th>Telefone</th>
-                    <th>E-mail</th>
+                    <th>Senha</th>
                 </tr>
                 <?php foreach($dao->read() as $cliente) : ?>
                     <tr>
