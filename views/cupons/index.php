@@ -370,6 +370,9 @@
             <h1 class="h2">Gerenciamento de Cupons</h1>
             
           </div>
+          <p>
+            <a href="create.php">Novo Cupom</a>
+          </p>
           
           <div class="table-responsive small">
             <table class="table table-hover">

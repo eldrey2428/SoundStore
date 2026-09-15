@@ -1,11 +1,3 @@
-<?php
-    // Incluir o arquivo para carregamento das classes
-    require "../../autoload.php";
-
-    // Instanciar um objeto da classe DAO
-    $dao = new CategoriaDAO();
-?>
-
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
   <head>
@@ -367,27 +359,38 @@
           <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
           >
-            <h1 class="h2">Gerenciamento de Categorias</h1>
+            <h1 class="h2">Cadastrar Cliente</h1>
             
           </div>
-
-          <p>
-            <a href="create.php">Nova Categoria</a>
-          </p>
           
           <div class="table-responsive small">
-            <table class="table table-hover">
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                </tr>
-                <?php foreach($dao->read() as $categoria) : ?>
-                    <tr>
-                        <td><?= $categoria->getId() ?></td>
-                        <td><?= $categoria->getNome() ?></td>
-                    </tr>
-                <?php endforeach ?>
-            </table>
+            <form action="insert.php" method="post">
+                <div class="form-group">
+                    <label for="nome">Nome</label>
+                    <input type="text" name="nome" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" name="email" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="cpf">CPF</label>
+                    <input type="text" name="cpf" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="telefone">Telefone</label>
+                    <input type="text" name="telefone" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="senha">Senha</label>
+                    <input type="text" name="senha" class="form-control">
+                </div>
+                <br>
+                <div class="form-group">
+                    <input type="reset" value="Limpar" class="btn btn-secondary">
+                    <input type="submit" value="Enviar" class="btn btn-success">
+                </div>
+            </form>
           </div>
         </main>
       </div>
