@@ -388,6 +388,14 @@
                         <td><?= $cupons->getCodigo() ?></td>
                         <td><?= $cupons->getDesconto() ?></td>
                         <td><?= $cupons->getValidade() ?></td>
+                        <td>
+                          <a href="edit.php?id=<?= $cupons->getId() ?>">
+                            Editar
+                          </a>
+                           <a href="destroy.php?id=<?= $cupons->getId() ?>">
+                            Excluir
+                          </a>
+                        </td>
                     </tr>
                 <?php endforeach ?>
             </table>

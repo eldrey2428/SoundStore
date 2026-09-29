@@ -44,4 +44,67 @@
                 echo "Erro #2: " . $e->getMessage();
             }            
         }
+
+         public function find($id) {
+            try {
+                $query = BD::getConexao()->prepare(
+                    "SELECT * FROM cupons WHERE id = :i"
+                );
+                $query->bindValue(':i', $id, PDO::PARAM_INT);
+                
+                if(!$query->execute()) {
+                    print_r($query->errorInfo());
+                }
+
+                if($linha = $query->fetch(PDO::FETCH_ASSOC)) {
+                    $cupons = new Cupons(); // Classe bean
+                    $cupons->setId($linha['id']);
+                    $cupons->setCodigo($linha['codigo']);
+                    $cupons->setDesconto($linha['desconto']);
+                    $cupons->setValidade($linha['validade']);
+
+                }
+                
+                return $cupons;
+            } 
+            catch(PDOException $e) {
+                echo "Erro #3: " . $e->getMessage();
+            }            
+        }
+        public function update($cupons) {
+            try {
+                $query = BD::getConexao()->prepare(
+                    "UPDATE cupons(codigo, desconto, validade) 
+                    SET codigo = :c, desconto = :d, validade = :v
+                    WHERE id = :i"
+                );
+                $query->bindValue(':c', $cupons->getCodigo(), PDO::PARAM_STR);
+                $query->bindValue(':d', $cupons->getDesconto(), PDO::PARAM_STR);
+                $query->bindValue(':v', $cupons->getValidade(), PDO::PARAM_STR);
+
+                if(!$query->execute()) {
+                    print_r($query->errorInfo());
+                }
+            }
+            catch(PDOException $e) {
+                echo "Erro #4: " . $e->getMessage();
+            }
+        }
+
+        public function destroy($id) {
+            try {
+                $query = BD::getConexao()->prepare(
+                    "DELETE FROM cupons
+                    WHERE id = :i"
+                );
+                $query->bindValue(':i', $cupons->getId(), PDO::PARAM_STR);
+
+                if(!$query->execute()) {
+                    print_r($query->errorInfo());
+                }
+            }
+            catch(PDOException $e) {
+                echo "Erro #5: " . $e->getMessage();
+            }
+        }
     }

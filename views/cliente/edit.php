@@ -1,9 +1,8 @@
 <?php
-    // Incluir o arquivo para carregamento das classes
     require "../../autoload.php";
 
-    // Instanciar um objeto da classe DAO
-    $dao = new CategoriaDAO();
+    $dao = new ClienteDAO();
+    $cliente = $dao->find($_GET['id']);
 ?>
 
 <!doctype html>
@@ -367,35 +366,41 @@
           <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
           >
-            <h1 class="h2">Gerenciamento de Categorias</h1>
+            <h1 class="h2">Editar Dados</h1>
             
           </div>
-
-          <p>
-            <a href="create.php">Nova Categoria</a>
-          </p>
           
           <div class="table-responsive small">
-            <table class="table table-hover">
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                </tr>
-                <?php foreach($dao->read() as $categoria) : ?>
-                    <tr>
-                        <td><?= $categoria->getId() ?></td>
-                        <td><?= $categoria->getNome() ?></td>
-                        <td>
-                          <a href="edit.php?id=<?= $categoria->getId() ?>">
-                            Editar
-                          </a>
-                           <a href="destroy.php?id=<?= $categoria->getId() ?>">
-                            Excluir
-                          </a>
-                        </td>
-                    </tr>
-                <?php endforeach ?>
-            </table>
+            <form action="update.php" method="post">
+                <div class="form-group">
+                    <label for="nome">Nome</label>
+                    <input type="text" name="nome" value="<?= $cliente->getNome() ?>" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" name="email" value="<?= $cliente->getEmail() ?>" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="cpf">CPF</label>
+                    <input type="text" name="cpf" value="<?= $cliente->getCpf() ?>" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="telefone">Telefone</label>
+                    <input type="text" name="telefone" value="<?= $cliente->getTelefone() ?>" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="senha">Senha</label>
+                    <input type="text" name="senha" value="<?= $cliente->getSenha() ?>" class="form-control">
+                </div>
+
+                <input type="hidden" name="id" value="<?= $cliente->getId() ?>">
+                
+                <br>
+                <div class="form-group">
+                    <input type="reset" value="Desfazer" class="btn btn-secondary">
+                    <input type="submit" value="Salvar" class="btn btn-success">
+                </div>
+            </form>
           </div>
         </main>
       </div>
