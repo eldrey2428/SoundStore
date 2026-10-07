@@ -3,7 +3,7 @@
         public function create($categoria) {
             try {
                 $query = BD::getConexao()->prepare(
-                    "INSERT INTO categorias(nome) 
+                    "INSERT INTO categorias 
                     VALUES (:n)"
                 );
                 $query->bindValue(':n', $categoria->getNome(), PDO::PARAM_STR);
@@ -67,7 +67,7 @@
         public function update($categoria) {
             try {
                 $query = BD::getConexao()->prepare(
-                    "UPDATE categorias(nome) 
+                    "UPDATE categorias 
                     SET nome = :n
                     WHERE id = :i"
                 );
@@ -86,10 +86,10 @@
         public function destroy($id) {
             try {
                 $query = BD::getConexao()->prepare(
-                    "DELETE FROM categoria
+                    "DELETE FROM categorias
                     WHERE id = :i"
                 );
-                $query->bindValue(':i', $categoria->getId(), PDO::PARAM_STR);
+                $query->bindValue(':i', $id, PDO::PARAM_STR);
 
                 if(!$query->execute()) {
                     print_r($query->errorInfo());

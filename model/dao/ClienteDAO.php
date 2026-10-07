@@ -80,8 +80,8 @@
         public function update($cliente) {
             try {
                 $query = BD::getConexao()->prepare(
-                    "UPDATE clientes(nome, email, cpf, telefone, senha) 
-                    SET nome = :n, cpf = :c, email= :e, telefone= :t
+                    "UPDATE clientes 
+                    SET nome = :n, cpf = :c, email= :e, telefone= :t, senha= :s
                     WHERE id = :i"
                 );
                 $query->bindValue(':n', $cliente->getNome(), PDO::PARAM_STR);
@@ -103,10 +103,10 @@
         public function destroy($id) {
             try {
                 $query = BD::getConexao()->prepare(
-                    "DELETE FROM cliente
+                    "DELETE FROM clientes
                     WHERE id = :i"
                 );
-                $query->bindValue(':i', $cliente->getId(), PDO::PARAM_STR);
+                $query->bindValue(':i', $id, PDO::PARAM_STR);
 
                 if(!$query->execute()) {
                     print_r($query->errorInfo());

@@ -24,6 +24,7 @@
     />
     <script src="../../js/color-modes.js"></script>
     <link href="../../css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <meta name="theme-color" content="#712cf9" />
     <link href="../../css/dashboard.css" rel="stylesheet" />
     <style>
@@ -367,19 +368,19 @@
           <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
           >
-            <h1 class="h2">Gerenciamento de Clientes</h1>
+            <h1 class="h2">Gerenciamento de Clientes</h1>           
             
           </div>
           <p>
             <a href="create.php">Novo Cliente</a>
-          </p>
+          </p>          
           
           <div class="table-responsive small">
             <table class="table table-hover">
                 <tr>
                     <th>ID</th>
                     <th>Nome</th>
-                    <th>E-mail</th>
+                    <th>Email</th>
                     <th>CPF</th>
                     <th>Telefone</th>
                     <th>Senha</th>
@@ -394,11 +395,11 @@
                         <td><?= $cliente->getTelefone() ?></td>
                         <td><?= $cliente->getSenha() ?></td>
                         <td>
-                          <a href="edit.php?id=<?= $cliente->getId() ?>">
-                            Editar
+                          <a title="Editar" href="edit.php?id=<?= $cliente->getId() ?>">
+                            <i class="bi bi-pencil"></i>
                           </a>
-                           <a href="destroy.php?id=<?= $cliente->getId() ?>">
-                            Excluir
+                          <a title="Excluir" class="link-danger" href="destroy.php?id=<?= $cliente->getId() ?>">
+                            <i class="bi bi-trash3"></i>
                           </a>
                         </td>
                     </tr>

@@ -74,13 +74,14 @@
         public function update($cupons) {
             try {
                 $query = BD::getConexao()->prepare(
-                    "UPDATE cupons(codigo, desconto, validade) 
+                    "UPDATE cupons
                     SET codigo = :c, desconto = :d, validade = :v
                     WHERE id = :i"
                 );
                 $query->bindValue(':c', $cupons->getCodigo(), PDO::PARAM_STR);
                 $query->bindValue(':d', $cupons->getDesconto(), PDO::PARAM_STR);
                 $query->bindValue(':v', $cupons->getValidade(), PDO::PARAM_STR);
+                $query->bindValue(':i', $cupons->getId(), PDO::PARAM_STR);
 
                 if(!$query->execute()) {
                     print_r($query->errorInfo());
@@ -97,7 +98,7 @@
                     "DELETE FROM cupons
                     WHERE id = :i"
                 );
-                $query->bindValue(':i', $cupons->getId(), PDO::PARAM_STR);
+                $query->bindValue(':i', $id, PDO::PARAM_STR);
 
                 if(!$query->execute()) {
                     print_r($query->errorInfo());
