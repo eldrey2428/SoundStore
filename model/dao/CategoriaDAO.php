@@ -28,7 +28,7 @@
                 $listaCategorias = array();
                 foreach($query->fetchAll(PDO::FETCH_ASSOC) as $linha) {
                     $categoria = new Categoria(); // Classe bean
-                    $categoria->setId($linha['id']);
+                    $categoria->setId($linha['id_categoria']);
                     $categoria->setNome($linha['nome']);
 
                     array_push($listaCategorias, $categoria);
@@ -44,7 +44,7 @@
          public function find($id) {
             try {
                 $query = BD::getConexao()->prepare(
-                    "SELECT * FROM categorias WHERE id = :i"
+                    "SELECT * FROM categorias WHERE id_categoria = :i"
                 );
                 $query->bindValue(':i', $id, PDO::PARAM_INT);
                 
@@ -54,7 +54,7 @@
 
                 if($linha = $query->fetch(PDO::FETCH_ASSOC)) {
                     $categoria = new Categoria(); // Classe bean
-                    $categoria->setId($linha['id']);
+                    $categoria->setId($linha['id_categoria']);
                     $categoria->setNome($linha['nome']);
                 }
                 
@@ -69,7 +69,7 @@
                 $query = BD::getConexao()->prepare(
                     "UPDATE categorias 
                     SET nome = :n
-                    WHERE id = :i"
+                    WHERE id_categoria = :i"
                 );
                 $query->bindValue(':n', $categoria->getNome(), PDO::PARAM_STR);
                 $query->bindValue(':i', $categoria->getId(), PDO::PARAM_STR);
@@ -87,7 +87,7 @@
             try {
                 $query = BD::getConexao()->prepare(
                     "DELETE FROM categorias
-                    WHERE id = :i"
+                    WHERE id_categoria = :i"
                 );
                 $query->bindValue(':i', $id, PDO::PARAM_STR);
 
