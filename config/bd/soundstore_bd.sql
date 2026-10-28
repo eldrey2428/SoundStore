@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 19/10/2026 às 03:54
+-- Tempo de geração: 28/10/2026 às 23:47
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `categorias` (
-  `id` int(11) NOT NULL,
+  `id_categoria` int(11) NOT NULL,
   `nome` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -36,7 +36,7 @@ CREATE TABLE `categorias` (
 -- Despejando dados para a tabela `categorias`
 --
 
-INSERT INTO `categorias` (`id`, `nome`) VALUES
+INSERT INTO `categorias` (`id_categoria`, `nome`) VALUES
 (1, 'Instrumentos'),
 (2, 'Equipamentos');
 
@@ -121,11 +121,18 @@ CREATE TABLE `pedidos_has_produtos` (
 
 CREATE TABLE `produtos` (
   `id` int(11) NOT NULL,
-  `categorias_id` int(11) DEFAULT NULL,
+  `id_categoria` int(11) DEFAULT NULL,
   `nome` varchar(100) DEFAULT NULL,
   `preco` decimal(10,2) DEFAULT NULL,
   `estoque` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `produtos`
+--
+
+INSERT INTO `produtos` (`id`, `id_categoria`, `nome`, `preco`, `estoque`) VALUES
+(22, 1, 'Guitarra', 1300.00, 2);
 
 --
 -- Índices para tabelas despejadas
@@ -135,7 +142,7 @@ CREATE TABLE `produtos` (
 -- Índices de tabela `categorias`
 --
 ALTER TABLE `categorias`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id_categoria`);
 
 --
 -- Índices de tabela `clientes`
@@ -170,7 +177,7 @@ ALTER TABLE `pedidos_has_produtos`
 --
 ALTER TABLE `produtos`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_produtos_categorias_idx` (`categorias_id`);
+  ADD KEY `fk_produtos_categorias_idx` (`id_categoria`);
 
 --
 -- AUTO_INCREMENT para tabelas despejadas
@@ -180,7 +187,7 @@ ALTER TABLE `produtos`
 -- AUTO_INCREMENT de tabela `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `clientes`
@@ -204,7 +211,7 @@ ALTER TABLE `pedidos`
 -- AUTO_INCREMENT de tabela `produtos`
 --
 ALTER TABLE `produtos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- Restrições para tabelas despejadas
@@ -228,7 +235,7 @@ ALTER TABLE `pedidos_has_produtos`
 -- Restrições para tabelas `produtos`
 --
 ALTER TABLE `produtos`
-  ADD CONSTRAINT `fk_produtos_categorias` FOREIGN KEY (`categorias_id`) REFERENCES `categorias` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_produtos_categorias` FOREIGN KEY (`id_categoria`) REFERENCES `categorias` (`id_categoria`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
