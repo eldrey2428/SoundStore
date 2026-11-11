@@ -390,12 +390,12 @@
                 <?php foreach($dao->read() as $pedidos) : ?>
                     <tr>
                         <td><?= $pedidos->getId() ?></td>
-                        <td><?= $pedidos->getProduto() ?></td>
+                        <td><?= $pedidos->getProdutos()->getNome() ?></td>
                         <td><?= $pedidos->getDataPedido() ?></td>
                         <td><?= $pedidos->getStatus() ?></td>
                         <td><?= $pedidos->getValorTotal() ?></td>
-                        <td><?= $pedidos->getCupons() ?></td>
-                        <td><?= $pedidos->getCliente()->getDataPedido() ?></td>
+                        <td><?= $pedidos->getCliente()->getNome() ?></td>
+                        <td><?= $pedidos->getCupons()->getDesconto() ?></td>
 
                         <td>
                           <a title="Editar" href="edit.php?id=<?= $pedidos->getId() ?>">

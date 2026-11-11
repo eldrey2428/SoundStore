@@ -50,9 +50,11 @@
                     $daoProdutos = new ProdutosDAO();
                     $produtos = $daoProdutos->find($linha['id_produtos']);
                     $pedidos->setProdutos($produtos);
+
+                    array_push($listaPedidos, $pedidos);
                 }
                 
-                return $pedidos;
+                return $listaPedidos;
             } 
             catch(PDOException $e) {
                 echo "Erro #2: " . $e->getMessage();
@@ -76,7 +78,18 @@
                     $pedidos->setDataPedido($linha['data_pedido']);
                     $pedidos->setStatus($linha['status']);
                     $pedidos->setValorTotal($linha['valor_total']);
+                    // Atributo da associação
+                    $daoCliente = new ClienteDAO();
+                    $cliente = $daoCliente->find($linha['id_cliente']);
+                    $pedidos->setCliente($cliente);
 
+                    $daoCupons = new CuponsDAO();
+                    $cupons = $daoCupons->find($linha['id_cupons']);
+                    $pedidos->setCupons($cupons);
+
+                    $daoProdutos = new ProdutosDAO();
+                    $produtos = $daoProdutos->find($linha['id_produtos']);
+                    $pedidos->setProdutos($produtos);
                 }
                 
                 return $pedidos;
@@ -89,13 +102,16 @@
             try {
                 $query = BD::getConexao()->prepare(
                     "UPDATE pedidos
-                    SET data_pedido = :d, status = :s, valor_total = :v
+                    SET data_pedido = :d, status = :s, valor_total = :v, id_cliente = :c, id_cupons = :u, id_produtos = :p
                     WHERE id = :i"
                 );
                 $query->bindValue(':d', $pedidos->getDataPedido(), PDO::PARAM_STR);
                 $query->bindValue(':s', $pedidos->getStatus(), PDO::PARAM_STR);
                 $query->bindValue(':v', $pedidos->getValorTotal(), PDO::PARAM_STR);
-                $query->bindValue(':i', $pedidos->getId(), PDO::PARAM_STR);
+                $query->bindValue(':c', $pedidos->getCliente()->getId(), PDO::PARAM_INT);
+                $query->bindValue(':u', $pedidos->getCupons()->getId(), PDO::PARAM_INT);
+                $query->bindValue(':p', $pedidos->getProdutos()->getId(), PDO::PARAM_INT);
+                $query->bindValue(':i', $pedidos->getId(), PDO::PARAM_INT);
 
                 if(!$query->execute()) {
                     print_r($query->errorInfo());
@@ -112,7 +128,7 @@
                     "DELETE FROM pedidos
                     WHERE id = :i"
                 );
-                $query->bindValue(':i', $id, PDO::PARAM_STR);
+                $query->bindValue(':i', $id, PDO::PARAM_INT);
 
                 if(!$query->execute()) {
                     print_r($query->errorInfo());

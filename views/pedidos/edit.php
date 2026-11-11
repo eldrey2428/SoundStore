@@ -4,7 +4,9 @@
     $dao = new PedidosDAO();
     $pedidos = $dao->find($_GET['id']);
 
-    $daoCategoria = new CategoriaDAO();
+    $daoProdutos = new ProdutosDAO();
+    $daoCliente = new ClienteDAO();
+    $daoCupons = new CuponsDAO();
 ?>
 
 <!doctype html>
@@ -374,6 +376,54 @@
           
           <div class="table-responsive small">
             <form action="update.php" method="post">
+                <div class="form-group">
+                  <label for="id_produtos">Produto</label>
+                  <select name="id_produtos" class="form-control">
+                    <?php foreach($daoProdutos->read() as $produtos) : ?>
+                      <?php if($produtos->getId() == $pedidos->getProdutos()->getId()) : ?>
+                        <option selected value="<?= $produtos->getId() ?>">
+                          <?= $produtos->getNome() ?>
+                        </option>
+                      <?php else : ?>
+                        <option value="<?= $produtos->getId() ?>">
+                          <?= $produtos->getNome() ?>
+                        </option>
+                      <?php endif ?>
+                    <?php endforeach ?>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="id_cliente">Cliente</label>
+                  <select name="id_cliente" class="form-control">
+                    <?php foreach($daoCliente->read() as $cliente) : ?>
+                      <?php if($cliente->getId() == $pedidos->getCliente()->getId()) : ?>
+                        <option selected value="<?= $cliente->getId() ?>">
+                          <?= $cliente->getNome() ?>
+                        </option>
+                      <?php else : ?>
+                        <option value="<?= $cliente->getId() ?>">
+                          <?= $cliente->getNome() ?>
+                        </option>
+                      <?php endif ?>
+                    <?php endforeach ?>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="id_cupons">Cupons</label>
+                  <select name="id_cupons" class="form-control">
+                    <?php foreach($daoCupons->read() as $cupons) : ?>
+                      <?php if($cupons->getId() == $pedidos->getCupons()->getId()) : ?>
+                        <option selected value="<?= $cupons->getId() ?>">
+                          <?= $cupons->getDesconto() ?>
+                        </option>
+                      <?php else : ?>
+                        <option value="<?= $cupons->getId() ?>">
+                          <?= $cupons->getDesconto() ?>
+                        </option>
+                      <?php endif ?>
+                    <?php endforeach ?>
+                  </select>
+                </div>
                 <div class="form-group">
                     <label for="dataPedido">Data do Pedido</label>
                     <input type="text" name="dataPedido" value="<?= $pedidos->getDataPedido() ?>" class="form-control">
