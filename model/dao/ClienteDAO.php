@@ -32,7 +32,7 @@
                 $listaClientes = array();
                 foreach($query->fetchAll(PDO::FETCH_ASSOC) as $linha) {
                     $cliente = new Cliente(); // Classe bean
-                    $cliente->setId($linha['id']);
+                    $cliente->setId($linha['id_cliente']);
                     $cliente->setNome($linha['nome']);
                     $cliente->setEmail($linha['email']);
                     $cliente->setCpf($linha['cpf']);
@@ -52,7 +52,7 @@
          public function find($id) {
             try {
                 $query = BD::getConexao()->prepare(
-                    "SELECT * FROM clientes WHERE id = :i"
+                    "SELECT * FROM clientes WHERE id_cliente = :i"
                 );
                 $query->bindValue(':i', $id, PDO::PARAM_INT);
                 
@@ -62,7 +62,7 @@
 
                 if($linha = $query->fetch(PDO::FETCH_ASSOC)) {
                     $cliente = new Cliente(); // Classe bean
-                    $cliente->setId($linha['id']);
+                    $cliente->setId($linha['id_cliente']);
                     $cliente->setNome($linha['nome']);
                     $cliente->setEmail($linha['email']);
                     $cliente->setCpf($linha['cpf']);
@@ -82,7 +82,7 @@
                 $query = BD::getConexao()->prepare(
                     "UPDATE clientes 
                     SET nome = :n, cpf = :c, email= :e, telefone= :t, senha= :s
-                    WHERE id = :i"
+                    WHERE id_cliente = :i"
                 );
                 $query->bindValue(':n', $cliente->getNome(), PDO::PARAM_STR);
                 $query->bindValue(':e', $cliente->getEmail(), PDO::PARAM_STR);
@@ -104,7 +104,7 @@
             try {
                 $query = BD::getConexao()->prepare(
                     "DELETE FROM clientes
-                    WHERE id = :i"
+                    WHERE id_cliente = :i"
                 );
                 $query->bindValue(':i', $id, PDO::PARAM_STR);
 

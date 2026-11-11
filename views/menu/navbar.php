@@ -45,11 +45,11 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link d-flex align-items-center gap-2" href="#">
+        <a class="nav-link d-flex align-items-center gap-2" href="../pedidos">
         <svg class="bi" aria-hidden="true">
             <use xlink:href="#puzzle"></use>
         </svg>
-        Integrations
+        Pedidos
         </a>
     </li>
     </ul>
