@@ -51,7 +51,7 @@
             }            
         }
 
-         public function find($id) {
+        public function find($id) {
             try {
                 $query = BD::getConexao()->prepare(
                     "SELECT * FROM produtos WHERE id = :i"
@@ -68,7 +68,11 @@
                     $produtos->setNome($linha['nome']);
                     $produtos->setPreco($linha['preco']);
                     $produtos->setEstoque($linha['estoque']);
-
+                    
+                    // Faltava isso aqui:
+                    $daoCategoria = new CategoriaDAO();
+                    $categoria = $daoCategoria->find($linha['id_categoria']);
+                    $produtos->setCategoria($categoria);
                 }
                 
                 return $produtos;
@@ -76,6 +80,7 @@
             catch(PDOException $e) {
                 echo "Erro #3: " . $e->getMessage();
             }            
+
         }
         public function update($produtos) {
             try {

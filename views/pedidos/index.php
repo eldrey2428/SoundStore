@@ -387,11 +387,11 @@
                     <th>Cupom</th>
                     <th>Ações</th>
                 </tr>
-                <?php foreach($dao->read() as $pedidos) : ?>
+                <?php foreach($dao->read() as$pedidos) : ?>
                     <tr>
                         <td><?= $pedidos->getId() ?></td>
                         <td><?= $pedidos->getProdutos()->getNome() ?></td>
-                        <td><?= $pedidos->getDataPedido() ?></td>
+                        <td><?= htmlspecialchars($pedidos->getDataPedidoFormatada()) ?></td>
                         <td><?= $pedidos->getStatus() ?></td>
                         <td><?= $pedidos->getValorTotal() ?></td>
                         <td><?= $pedidos->getCliente()->getNome() ?></td>

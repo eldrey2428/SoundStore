@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 10/11/2026 às 17:19
+-- Tempo de geração: 24/11/2026 às 15:34
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -106,10 +106,10 @@ CREATE TABLE `pedidos` (
 --
 
 INSERT INTO `pedidos` (`id`, `data_pedido`, `status`, `valor_total`, `id_cupons`, `id_cliente`, `id_produtos`) VALUES
-(1, '2026-11-10 00:00:00', 'ativo', 1200.00, 1, 2, 22),
-(2, '2026-11-10 00:00:00', 'ativo', 1200.00, 1, 2, 22),
-(3, '2026-11-10 00:00:00', 'ativo', 1200.00, 1, 4, 22),
-(4, '2026-11-10 00:00:00', 'ativo', 1200.00, 1, 4, 22);
+(2, '2026-11-24 00:00:00', 'Ativo', 1200.00, 1, 2, 22),
+(3, '2026-11-24 00:00:00', 'Ativo', 1200.00, 1, 4, 22),
+(4, '2026-11-24 00:00:00', 'Ativo', 1200.00, 1, 1, 22),
+(5, '2026-11-24 00:00:00', 'Ativo', 2780.00, 2, 2, 24);
 
 -- --------------------------------------------------------
 
@@ -143,7 +143,8 @@ CREATE TABLE `produtos` (
 --
 
 INSERT INTO `produtos` (`id`, `id_categoria`, `nome`, `preco`, `estoque`) VALUES
-(22, 1, 'Guitarra', 1300.00, 2);
+(22, 1, 'Guitarra', 1300.00, 2),
+(24, 1, 'Bateria do Josh Dun', 2800.00, 1);
 
 --
 -- Índices para tabelas despejadas
@@ -216,13 +217,13 @@ ALTER TABLE `cupons`
 -- AUTO_INCREMENT de tabela `pedidos`
 --
 ALTER TABLE `pedidos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `produtos`
 --
 ALTER TABLE `produtos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- Restrições para tabelas despejadas

@@ -7,6 +7,7 @@
     $daoProdutos = new ProdutosDAO();
     $daoCliente = new ClienteDAO();
     $daoCupons = new CuponsDAO();
+    $daoCategoria = new CategoriaDAO();
 ?>
 
 <!doctype html>
@@ -393,6 +394,23 @@
                   </select>
                 </div>
                 <div class="form-group">
+                  <label for="id_categoria">Categoria</label>
+                  <select name="id_categoria" class="form-control">
+                    <?php foreach($daoCategoria->read() as $categoria) : ?>
+                      <?php if($categoria->getId() == $produtos->getCategoria()->getId()) : ?>
+                      <option selected value="<?= $categoria->getId() ?>">
+                        <?= $categoria->getNome() ?>
+                      </option>
+                      <?php else : ?>
+                      <option value="<?= $categoria->getId() ?>">
+                        <?= $categoria->getNome() ?>
+                      </option>
+                      <?php endif ?>
+                    <?php endforeach ?>
+                  </select>
+                </div>
+
+                <div class="form-group">
                   <label for="id_cliente">Cliente</label>
                   <select name="id_cliente" class="form-control">
                     <?php foreach($daoCliente->read() as $cliente) : ?>
@@ -426,7 +444,7 @@
                 </div>
                 <div class="form-group">
                     <label for="dataPedido">Data do Pedido</label>
-                    <input type="text" name="dataPedido" value="<?= $pedidos->getDataPedido() ?>" class="form-control">
+                    <input type="date" name="dataPedido" value="<?= htmlspecialchars($pedidos->getDataPedido()) ?>" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="status">Status</label>

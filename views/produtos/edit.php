@@ -3,6 +3,8 @@
 
     $dao = new ProdutosDAO();
     $produtos = $dao->find($_GET['id']);
+
+    $daoCategoria = new CategoriaDAO();
 ?>
 
 <!doctype html>
@@ -379,6 +381,23 @@
                 <div class="form-group">
                     <label for="preco">Preço</label>
                     <input type="text" name="preco" value="<?= $produtos->getPreco() ?>" class="form-control">
+                </div>
+
+                <div class="form-group">
+                  <label for="id_categoria">Categoria</label>
+                  <select name="id_categoria" class="form-control">
+                    <?php foreach($daoCategoria->read() as $categoria) : ?>
+                      <?php if($categoria->getId() == $produtos->getCategoria()->getId()) : ?>
+                      <option selected value="<?= $categoria->getId() ?>">
+                        <?= $categoria->getNome() ?>
+                      </option>
+                      <?php else : ?>
+                      <option value="<?= $categoria->getId() ?>">
+                        <?= $categoria->getNome() ?>
+                      </option>
+                      <?php endif ?>
+                    <?php endforeach ?>
+                  </select>
                 </div>
                 
                 <div class="form-group">

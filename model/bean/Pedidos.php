@@ -13,15 +13,27 @@
         }
 
         public function setId($id) {
-            $this->id = $id;
+            $this->id =$id;
         }
 
         public function getDataPedido() {
             return $this->dataPedido;
         }
 
+        public function getDataPedidoFormatada() {
+            if (empty($this->dataPedido)) {
+                return '';
+            }
+            $data = DateTime::createFromFormat('Y-m-d',$this->dataPedido);
+            if ($data !== false) {
+                return $data->format('d/m/Y');
+            }
+            $timestamp = strtotime($this->dataPedido);
+            return $timestamp !== false ? date('d/m/Y', $timestamp) :$this->dataPedido;
+        }
+
         public function setDataPedido($dataPedido) {
-            $this->dataPedido = $dataPedido;
+            $this->dataPedido =$dataPedido;
         }
 
         public function getStatus() {
@@ -29,7 +41,7 @@
         }
 
         public function setStatus($status) {
-            $this->status = $status;
+            $this->status =$status;
         }
 
         public function getValorTotal() {
@@ -37,7 +49,7 @@
         }
 
         public function setValorTotal($valorTotal) {
-            $this->valorTotal = $valorTotal;
+            $this->valorTotal =$valorTotal;
         }
         
         //Get e Set do atributo de associação
@@ -46,7 +58,7 @@
         }
 
         public function setCliente($cliente) {
-            $this->cliente = $cliente;
+            $this->cliente =$cliente;
         }
         
         public function getCupons() {
@@ -54,7 +66,7 @@
         }
 
         public function setCupons($cupons) {
-            $this->cupons = $cupons;
+            $this->cupons =$cupons;
         }
         
         public function getProdutos() {
@@ -62,6 +74,6 @@
         }
 
         public function setProdutos($produtos) {
-            $this->produtos = $produtos;
+            $this->produtos =$produtos;
         }
     }
